@@ -1,4 +1,5 @@
 import React from 'react';
+import Layout from 'pages/_layout';
 import {
   RouteProps as DefaultRouteProps,
   Route as DefaultRoute,
@@ -9,7 +10,16 @@ interface RouteProps extends DefaultRouteProps {
 }
 
 const Route: React.FC<RouteProps> = ({ component: Component, ...rest }) => {
-  return <DefaultRoute {...rest} render={() => <Component />} />;
+  return (
+    <DefaultRoute
+      {...rest}
+      render={() => (
+        <Layout>
+          <Component />
+        </Layout>
+      )}
+    />
+  );
 };
 
 export default Route;
