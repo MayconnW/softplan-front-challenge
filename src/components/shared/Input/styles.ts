@@ -76,6 +76,8 @@ export const Label = styled.span`
   font-size: 16px;
   align-self: flex-start;
   color: ${({ theme }) => theme.color.secondary};
+  margin-left: 8px;
+  margin-bottom: 3px;
 `;
 
 export const IconContainer = styled.div`
