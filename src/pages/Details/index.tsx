@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+import history from 'services/history';
 
+import { Back } from 'components/shared';
 import { FiEdit, FiMapPin, FiMap, FiActivity } from 'react-icons/fi';
 import { Container, Card } from './styles';
 
@@ -13,10 +15,15 @@ const mock = {
 };
 
 const Main: React.FC = () => {
+  const handleEditClick = useCallback(() => {
+    history.push('/edit');
+  }, []);
+
   return (
     <Container>
+      <Back />
       <Card>
-        <FiEdit size={28} />
+        <FiEdit size={28} onClick={handleEditClick} />
         <div>
           <img src={mock.flagUrl} alt={`${mock.countryName} flag`} />
           <h3>{mock.countryName}</h3>
