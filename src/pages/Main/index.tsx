@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useCallback } from 'react';
+import history from 'services/history';
 
 import { FiSearch } from 'react-icons/fi';
 import Input from 'components/shared/Input';
@@ -63,12 +64,16 @@ const mock = [
 ];
 
 const Main: React.FC = () => {
+  const handleCardClick = useCallback(() => {
+    history.push('/details');
+  }, []);
+
   return (
     <Container>
       <Input type="text" placeholder="Type the Country name" icon={FiSearch} />
       <CardsGrid>
         {mock.map(item => (
-          <Card key={item.countryName} {...item} />
+          <Card key={item.countryName} {...item} onClick={handleCardClick} />
         ))}
       </CardsGrid>
     </Container>

@@ -6,11 +6,17 @@ interface CardContent {
   flagUrl: string;
   countryName: string;
   capitalName: string;
+  onClick?(): void;
 }
 
-const Card: React.FC<CardContent> = ({ flagUrl, countryName, capitalName }) => {
+const Card: React.FC<CardContent> = ({
+  flagUrl,
+  countryName,
+  capitalName,
+  onClick,
+}) => {
   return (
-    <Container>
+    <Container onClick={onClick}>
       <img src={flagUrl} alt={countryName} />
       <span>
         Country: <strong>{countryName}</strong>
