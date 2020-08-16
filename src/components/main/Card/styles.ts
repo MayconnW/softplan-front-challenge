@@ -12,6 +12,13 @@ export const Container = styled.div`
   padding: 20px;
   border-radius: 8px;
   background: ${({ theme }) => lighten(0.055, theme.color.primary)};
+  cursor: pointer;
+
+  transition: box-shadow 250ms ease;
+  &:hover {
+    box-shadow: 1px 1px 10px 2px
+      ${({ theme }) => lighten(0.1, theme.color.primary)};
+  }
 
   > img {
     width: 116px;

@@ -12,7 +12,7 @@ export const Card = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  padding: 20px 30px;
+  padding: 35px 0 25px 0;
   width: fit-content;
   min-width: 320px;
   border-radius: 8px;
@@ -49,36 +49,36 @@ export const Card = styled.div`
   > div {
     display: flex;
     align-items: center;
+    flex-direction: column;
 
     h3 {
       font-size: 24px;
       color: ${({ theme }) => theme.color.tertiary};
       font-weight: bold;
-      margin-left: 10px;
+      margin-top: 12px;
     }
   }
 
   > ul {
     list-style: none;
     margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
+    grid-row-gap: 20px;
 
     li {
       display: flex;
       align-items: center;
-
-      & + li {
-        margin-top: 18px;
-      }
+      flex-direction: column;
     }
 
     span {
-      margin-left: 12px;
       font-size: 18px;
       color: ${({ theme }) => theme.color.secondary};
     }
 
     strong {
-      margin-left: 8px;
+      line-height: 1;
       font-size: 18px;
       color: ${({ theme }) => theme.color.tertiary};
       font-weight: bold;
@@ -86,6 +86,6 @@ export const Card = styled.div`
   }
 
   @media screen and (max-width: 360px) {
-    min-width: auto;
+    min-width: 100%;
   }
 `;
