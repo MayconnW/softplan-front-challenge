@@ -53,6 +53,16 @@
           "ts": "never",
           "tsx": "never"
         }
+      ],
+      "import/no-extraneous-dependencies": [
+        2,
+        {
+          "devDependencies": [
+            "src/**/*.test.ts",
+            "src/**/*.test.tsx",
+            "src/setupTests"
+          ]
+        }
       ]
     },
     "settings": {
