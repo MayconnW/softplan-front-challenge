@@ -1,57 +1,92 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import useCountry from 'hooks/useCountry';
 import history from 'services/history';
+import { Country } from 'interfaces/Country';
 
+import MainCard, { CardContent } from 'components/main/Card';
 import { Back } from 'components/shared';
 import { FiEdit, FiMapPin, FiMap, FiActivity } from 'react-icons/fi';
-import { Container, Card } from './styles';
+import { Container, Card, CardsGrid } from './styles';
 
-const mock = {
-  flagUrl:
-    'https://storage.vendavall.com.br/avatar/1597345196.5f358dac81f518.77815030.png',
-  countryName: 'Brazil',
-  capitalName: 'Brasília',
-  area: '200.000.150',
-  population: '255.500.147',
-};
+interface Params {
+  id: string;
+}
 
 const Main: React.FC = () => {
+  const [country, setCountry] = useState<Country | undefined>(undefined);
+  const [countriesAround, setCountriesAround] = useState<CardContent[]>([]);
+  const { id } = useParams<Params>();
+  const { getCountry, getCountryByName } = useCountry();
+
+  useEffect(() => {
+    setCountry(getCountry(id));
+  }, [id, getCountry]);
+
+  useEffect(() => {
+    if (!country) return;
+    setCountriesAround(
+      country.distanceToOtherCountries.map(item => {
+        const data = getCountryByName(item.countryName);
+        return {
+          flagUrl: data?.flag.svgFile || '',
+          countryName: `${item.countryName} (${Math.ceil(
+            item.distanceInKm,
+          )}km)`,
+          capitalName: data?.capital || '',
+          onClick: () => {
+            history.push(`/details/${data?.id}`);
+          },
+        };
+      }),
+    );
+  }, [country, getCountryByName]);
+
   const handleEditClick = useCallback(() => {
-    history.push('/edit');
-  }, []);
+    if (!country) return;
+    history.push(`/edit/${country.id}`);
+  }, [country]);
 
   return (
     <Container>
-      <Back />
-      <Card>
-        <FiEdit size={28} onClick={handleEditClick} />
-        <div>
-          <img src={mock.flagUrl} alt={`${mock.countryName} flag`} />
-          <h3>{mock.countryName}</h3>
-        </div>
-        <ul>
-          <li>
-            <FiMap size={24} />
-            <span>Capital: </span>
-            <strong>{mock.capitalName}</strong>
-          </li>
-          <li>
-            <FiMapPin size={24} />
-            <span>Área: </span>
-            <strong>{mock.area}</strong>
-          </li>
-          <li>
-            <FiActivity size={24} />
-            <span>População: </span>
-            <strong>{mock.population}</strong>
-          </li>
-          <li>
-            <FiActivity size={24} />
-            <span>População: </span>
-            <strong>{mock.population}</strong>
-          </li>
-        </ul>
-        <span>MAPA</span>
-      </Card>
+      <Back location="/" />
+      {country && (
+        <Card data-testid="_showCardContainer" key={`country-${country.id}`}>
+          <FiEdit size={28} onClick={handleEditClick} data-testid="_editTest" />
+          <div>
+            <img src={country.flag.svgFile} alt={`${country.name} flag`} />
+            <h3>{country.name}</h3>
+          </div>
+          <ul>
+            <li>
+              <FiMap size={24} />
+              <span>Capital </span>
+              <strong>{country.capital}</strong>
+            </li>
+            <li>
+              <FiMapPin size={24} />
+              <span>Área </span>
+              <strong>{country.area}</strong>
+            </li>
+            <li>
+              <FiActivity size={24} />
+              <span>Population </span>
+              <strong>{country.population}</strong>
+            </li>
+            <li>
+              <FiActivity size={24} />
+              <span>Population </span>
+              <strong>{country.population}</strong>
+            </li>
+          </ul>
+        </Card>
+      )}
+      <h3>Nearest Countries</h3>
+      <CardsGrid>
+        {countriesAround.map(item => (
+          <MainCard {...item} key={item.countryName} />
+        ))}
+      </CardsGrid>
     </Container>
   );
 };

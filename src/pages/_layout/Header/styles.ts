@@ -8,4 +8,11 @@ export const Container = styled.div`
   align-items: center;
   padding-left: 20px;
   background: ${({ theme }) => shade(0.173, theme.color.primary)};
+
+  @media screen and (max-width: 400px) {
+    padding: 0 10px;
+    svg {
+      width: 100%;
+    }
+  }
 `;

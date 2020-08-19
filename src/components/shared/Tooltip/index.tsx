@@ -29,6 +29,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   return (
     <Container className={className}>
       <HtmlTooltip
+        data-testid="_tooltipContainer"
         enterTouchDelay={0}
         title={<ContentTooltip type={type}>{title}</ContentTooltip>}
       >

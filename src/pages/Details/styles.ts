@@ -6,6 +6,13 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px;
+
+  > h3 {
+    margin-top: 45px;
+    color: ${({ theme }) => theme.color.secondary};
+    font-size: 26px;
+    font-weight: bold;
+  }
 `;
 
 export const Card = styled.div`
@@ -14,21 +21,10 @@ export const Card = styled.div`
   position: relative;
   padding: 35px 0 25px 0;
   width: fit-content;
-  min-width: 320px;
+  width: 100%;
+  max-width: 420px;
   border-radius: 8px;
   background: ${({ theme }) => lighten(0.055, theme.color.primary)};
-
-  > span {
-    margin-top: 30px;
-    width: 180px;
-    height: 120px;
-    align-self: center;
-    background: #fff;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
 
   > svg {
     position: absolute;
@@ -51,11 +47,18 @@ export const Card = styled.div`
     align-items: center;
     flex-direction: column;
 
-    h3 {
+    > h3 {
       font-size: 24px;
       color: ${({ theme }) => theme.color.tertiary};
       font-weight: bold;
       margin-top: 12px;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    > img {
+      width: 120px;
+      border-radius: 6px;
     }
   }
 
@@ -64,7 +67,7 @@ export const Card = styled.div`
     margin-top: 40px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-    grid-row-gap: 20px;
+    grid-row-gap: 30px;
 
     li {
       display: flex;
@@ -82,10 +85,15 @@ export const Card = styled.div`
       font-size: 18px;
       color: ${({ theme }) => theme.color.tertiary};
       font-weight: bold;
+      text-align: center;
     }
   }
+`;
 
-  @media screen and (max-width: 360px) {
-    min-width: 100%;
-  }
+export const CardsGrid = styled.div`
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-gap: 20px;
+  width: 100%;
 `;

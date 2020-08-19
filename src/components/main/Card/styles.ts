@@ -27,6 +27,7 @@ export const Container = styled.div`
   > span {
     font-size: 24px;
     color: ${({ theme }) => theme.color.secondary};
+    text-align: center;
 
     strong {
       color: ${({ theme }) => theme.color.tertiary};

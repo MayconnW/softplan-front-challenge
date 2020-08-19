@@ -21,6 +21,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   icon?: React.ComponentType<IconBaseProps>;
   label?: string;
   error?: string;
+  register?(ref: HTMLInputElement): void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -31,6 +32,7 @@ const Input: React.FC<InputProps> = ({
   label,
   error,
   type = 'text',
+  register,
   ...rest
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -62,19 +64,26 @@ const Input: React.FC<InputProps> = ({
     setIsFilled(!!inputRef.current?.value);
   }, []);
 
+  useEffect(() => {
+    if (typeof register === 'function' && inputRef?.current) {
+      register(inputRef.current);
+    }
+  }, [register]);
+
   return useMemo(
     () => (
       <Container className={className}>
-        {!!label && <Label>{label}</Label>}
+        {!!label && <Label data-testid="_labelTest">{label}</Label>}
         <InputContainer
           hasError={!!error}
           isFilled={isFilled}
           isFocused={isFocused}
           className="_inputContainer"
+          data-testid="_inputContainer"
         >
           {Icon && (
             <IconContainer className="_iconContainer">
-              <Icon size={20} />
+              <Icon size={20} data-testid="_iconTest" />
             </IconContainer>
           )}
           <input
@@ -87,7 +96,7 @@ const Input: React.FC<InputProps> = ({
           />
           {!!error && (
             <Error title={error} type="error">
-              <FiAlertCircle size={20} />
+              <FiAlertCircle size={20} data-testid="_errorTest" />
             </Error>
           )}
         </InputContainer>

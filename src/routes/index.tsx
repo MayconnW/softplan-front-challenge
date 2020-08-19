@@ -10,8 +10,8 @@ import Route from './Route';
 const Routes: React.FC = () => (
   <Switch>
     <Route exact path="/" component={Main} />
-    <Route exact path="/details" component={Details} />
-    <Route exact path="/edit" component={Edit} />
+    <Route exact path="/details/:id" component={Details} />
+    <Route exact path="/edit/:id" component={Edit} />
   </Switch>
 );
 

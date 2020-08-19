@@ -1,34 +1,34 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { queryByTestId } from '@testing-library/dom';
-import { ThemeContext } from 'styled-components';
+import { render, cleanup } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from 'styles/theme';
 import Button from '.';
 
-describe('<Button />', () => {
-  test('should render loader', () => {
-    const text = 'Click here!';
-    const { container } = render(
-      <ThemeContext.Provider value={defaultTheme}>
-        <Button buttonRole="primary" type="button" loading>
-          {text}
-        </Button>
-      </ThemeContext.Provider>,
-    );
+const text = 'Click here';
 
-    expect(queryByTestId(container, /button-loader/)).toBeInTheDocument();
+describe('<Button />', () => {
+  beforeEach(() => {
+    cleanup();
   });
 
-  test('should render with children', () => {
-    const text = 'Click here!';
+  it('should render the button with children', () => {
     const { getByText } = render(
-      <ThemeContext.Provider value={defaultTheme}>
-        <Button buttonRole="primary" type="button">
-          {text}
-        </Button>
-      </ThemeContext.Provider>,
+      <ThemeProvider theme={defaultTheme}>
+        <Button type="button">{text}</Button>
+      </ThemeProvider>,
     );
 
-    expect(getByText(text)).toBeInTheDocument();
+    expect(getByText(text)).toBeTruthy();
+  });
+
+  it('should render loader', () => {
+    const { getByTestId } = render(
+      <ThemeProvider theme={defaultTheme}>
+        <Button type="button" loading>
+          {text}
+        </Button>
+      </ThemeProvider>,
+    );
+    expect(getByTestId('button-loader')).toBeInTheDocument();
   });
 });

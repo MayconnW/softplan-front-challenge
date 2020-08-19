@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container } from './styles';
 
-interface CardContent {
+export interface CardContent {
   flagUrl: string;
   countryName: string;
   capitalName: string;
@@ -16,7 +16,7 @@ const Card: React.FC<CardContent> = ({
   onClick,
 }) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} data-testid="_cardContainer">
       <img src={flagUrl} alt={countryName} />
       <span>
         Country: <strong>{countryName}</strong>

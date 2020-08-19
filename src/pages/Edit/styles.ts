@@ -36,10 +36,14 @@ export const Card = styled.div`
     align-items: center;
     position: relative;
 
+    > img {
+      width: 160px;
+    }
+
     > svg {
       position: absolute;
-      bottom: -13px;
-      right: -22px;
+      bottom: -19px;
+      right: -26px;
       cursor: pointer;
 
       @keyframes wave {

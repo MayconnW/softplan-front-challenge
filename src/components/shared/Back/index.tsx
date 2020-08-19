@@ -4,13 +4,21 @@ import history from 'services/history';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Container } from './styles';
 
-const Back: React.FC = () => {
+interface Props {
+  location?: string;
+}
+
+const Back: React.FC<Props> = ({ location }) => {
   const handleClick = useCallback(() => {
+    if (location) {
+      history.push(location);
+      return;
+    }
     history.goBack();
-  }, []);
+  }, [location]);
 
   return (
-    <Container onClick={handleClick}>
+    <Container onClick={handleClick} data-testid="_backComponent">
       <div>
         <FiArrowLeft size={32} />
         <span>Back</span>
